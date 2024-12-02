@@ -1,0 +1,20 @@
+services:
+  solafune_idd:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: solafune-idd-image
+    runtime: nvidia
+    ports:
+      - "8888:8888"
+    volumes:
+      - ../data:/app/data
+      - ../notebooks:/app/notebooks
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    command: jupyter-lab --port 8888 --allow-root --no-browser --ip=0.0.0.0
+
+
